@@ -36,11 +36,10 @@ class SomeClassificationChecker:
                  "svc": None,
                  "nb": None,
                  "sgd": None}
-    result = pd.DataFrame
 
     def __init__(self, **kwargs):
 
-        if kwargs is None:
+        if len(kwargs.items()) == 0:
             self.algo_list["lr"] = Lr.logistic_regression_model()
             self.algo_list["svc"] = Svc.svc_model()
             self.algo_list["nb"] = Nb.naive_bayes_model()
@@ -65,8 +64,7 @@ class SomeClassificationChecker:
         }
 
         for key, value in self.algo_list.items():
-
-            scores = cross_validate(value, work_data, work_label, cv=self.kf, scoring=scoring)
+            scores = cross_validate(value, work_data, work_label, cv=self.skf, scoring=scoring)
 
             print(key + "'s Accuracy (mean):", scores['test_acc'].mean())
             print(key + "'s AUC (mean):", scores['test_auc'].mean())
