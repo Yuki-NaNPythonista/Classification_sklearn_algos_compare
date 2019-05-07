@@ -57,6 +57,7 @@ class SomeClassificationChecker:
                 self.algo_list["sgd"] = Sgd.sgd_model(sgd_dict=value)
 
     def algo_check(self, work_data, work_label):
+        score_data = pd.DataFrame()
 
         scoring = {
             'acc': 'accuracy',
@@ -66,8 +67,13 @@ class SomeClassificationChecker:
         for key, value in self.algo_list.items():
             scores = cross_validate(value, work_data, work_label, cv=self.skf, scoring=scoring)
 
+            score_data[f"{key}_acc"] = scores['test_acc']
+            score_data[f"{key}_auc"] = scores['test_auc']
+
             print(key + "'s Accuracy (mean):", scores['test_acc'].mean())
             print(key + "'s AUC (mean):", scores['test_auc'].mean())
+
+        return score_data
 
 
 def main():
