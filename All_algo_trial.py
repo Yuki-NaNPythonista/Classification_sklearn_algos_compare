@@ -21,6 +21,8 @@ from Classification_sklearn_algos_conpare.algos import Lr as Lr
 from Classification_sklearn_algos_conpare.algos import Svc as Svc
 from Classification_sklearn_algos_conpare.algos import Nb as Nb
 from Classification_sklearn_algos_conpare.algos import Sgd as Sgd
+from Classification_sklearn_algos_conpare.algos import Dt as Dt
+from Classification_sklearn_algos_conpare.algos import Rf as Rf
 
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_validate
@@ -44,6 +46,8 @@ class SomeClassificationChecker:
             self.algo_list["svc"] = Svc.svc_model()
             self.algo_list["nb"] = Nb.naive_bayes_model()
             self.algo_list["sgd"] = Sgd.sgd_model()
+            self.algo_list["Dt"] = Dt.decision_tree_model()
+            self.algo_list["Rf"] = Rf.random_forest_model()
             return
 
         for key, value in kwargs.items():
@@ -55,6 +59,10 @@ class SomeClassificationChecker:
                 self.algo_list["nb"] = Nb.naive_bayes_model(nb_dict=value)
             elif "sgd" in key:
                 self.algo_list["sgd"] = Sgd.sgd_model(sgd_dict=value)
+            elif "Dt" in key:
+                self.algo_list["Dt"] = Dt.decision_tree_model(dt_dict=value)
+            elif "Rf" in key:
+                self.algo_list["Rf"] = Rf.random_forest_model(rf_dict=value)
 
     def algo_check(self, work_data, work_label):
         score_data = pd.DataFrame()
